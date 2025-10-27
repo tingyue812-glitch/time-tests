@@ -1,5 +1,6 @@
 import datetime
 from times import time_range, compute_overlap_time
+import pytest
 
 def test_given_input():
     large = time_range("2010-01-12 10:00:00", "2010-01-12 12:00:00")
@@ -41,3 +42,7 @@ def test_touching_ranges():
 
     expected = [('2010-01-12 10:00:00', '2010-01-12 10:00:00')]
     assert result == expected
+
+def test_time_range_backwards():
+    with pytest.raises(ValueError, match="end_time .* before start_time"):
+        time_range("2010-01-12 12:00:00", "2010-01-12 10:00:00")
